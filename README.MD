@@ -4,7 +4,7 @@
 
 > All informations comming from [covid-19-api](https://github.com/mathdroid/covid-19-api) by [mathdroid](https://github.com/mathdroid).
 
-### [See live]()
+### [See live](https://covid19.data.eti.br)
 
 ## Next steps
 - [ ] Portuguese translation
