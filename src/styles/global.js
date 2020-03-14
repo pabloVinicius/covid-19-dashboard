@@ -1,7 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 
 export default createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700&display=swap');
   * {
     margin: 0;
     padding: 0;
@@ -18,13 +17,39 @@ export default createGlobalStyle`
     -webkit-font-smoothing: antialiased !important;
   }
 
-  body, input, button {
-    color: #737373;
+  a, body, input, button, html {
+    color: ${props => props.theme.colors.primary};
     font-size: 1rem;
     font-family: 'Montserrat', sans-serif;
   }
 
   button {
     cursor: pointer;
+  }
+
+  /* font resizing */
+
+  @media(max-width: 1366px) {
+    html {
+      font-size: 12px;
+    }
+  }
+
+  @media(max-width: 1242px) {
+    html {
+      font-size: 10px;
+    }
+  }
+
+  @media(max-width: 908px) {
+    html {
+      font-size: 8px;
+    }
+  }
+
+  @media(max-width: 710px) {
+    html {
+      font-size: 13px;
+    }
   }
 `;

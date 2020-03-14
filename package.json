@@ -8,8 +8,10 @@
     "@testing-library/user-event": "^7.1.2",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
+    "react-icons": "^3.9.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
+    "react-switch": "^5.0.1",
     "styled-components": "^5.0.1"
   },
   "scripts": {
