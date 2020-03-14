@@ -14,7 +14,7 @@ export const Container = styled.div`
     color: ${props => props.theme.colors.primary};
     line-height: 3.6875rem;
     font-size: 3rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     text-align: center;
   }
 `;
@@ -31,7 +31,7 @@ export const TopBar = styled.div`
   width: 100%;
   justify-content: space-between;
   height: fit-content;
-  padding: 2.8125em 7.125rem 1.1875em;
+  padding: 2em 7.125rem 1em;
 
   & > div {
     display: flex;
@@ -62,7 +62,7 @@ export const Link = styled(RouterLink)`
 export const Numbers = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 
   & > div {
     :not(:last-of-type) {
@@ -100,10 +100,9 @@ export const Numbers = styled.div`
   }
 `;
 export const Content = styled.div`
-  display: flex;
+  display: block;
   flex: 1;
   width: 100%;
-  background: red;
 `;
 
 export const Footer = styled.footer`
