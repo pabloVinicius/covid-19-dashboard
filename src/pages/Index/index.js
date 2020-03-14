@@ -1,14 +1,16 @@
-import React from 'react';
-
+import React, { useState } from 'react';
+import ReactTooltip from 'react-tooltip';
 import Layout from '~/components/Layout';
 import World from '~/components/World';
 
-const index = () => {
+const Index = () => {
+  const [content, setContent] = useState('');
   return (
     <Layout>
-      <World />
+      <World setTooltipContent={setContent} />
+      <ReactTooltip>{content}</ReactTooltip>
     </Layout>
   );
 };
 
-export default index;
+export default Index;

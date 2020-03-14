@@ -52,4 +52,9 @@ export default createGlobalStyle`
       font-size: 13px;
     }
   }
+
+  svg {
+  display: inline-block;
+  vertical-align: middle;
+}
 `;
