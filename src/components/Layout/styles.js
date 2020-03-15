@@ -30,6 +30,7 @@ export const Container = styled.div`
 
   @media screen and (max-width: 710px) {
     padding: 0 4.44vw;
+    overflow-x: hidden;
     h1 {
       font-size: 5.88vw;
       line-height: 8.88vw;
