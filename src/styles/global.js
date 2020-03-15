@@ -5,6 +5,7 @@ export default createGlobalStyle`
     margin: 0;
     padding: 0;
     outline: 0;
+    transition: all 300ms;
     box-sizing: border-box;
   }
 
@@ -21,7 +22,7 @@ export default createGlobalStyle`
     color: ${props => props.theme.colors.primary};
     font-size: 1rem;
     font-family: 'Montserrat', sans-serif;
-    transition: all 300ms;
+    background-color: ${props => props.theme.colors.background};
   }
 
   button {

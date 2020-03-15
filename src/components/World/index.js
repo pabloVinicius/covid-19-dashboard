@@ -1,4 +1,5 @@
 import React, { memo, useContext, useMemo } from 'react';
+import { ThemeContext } from 'styled-components';
 import { scaleLog } from 'd3-scale';
 import { format } from 'date-fns';
 import {
@@ -19,6 +20,7 @@ const geoUrl =
 
 const MapChart = ({ setTooltipContent }) => {
   const { countriesData } = useContext(AppContext);
+  const { colors } = useContext(ThemeContext);
   const isMobile = useMobileWatcher();
 
   console.log({ isMobile });
@@ -81,12 +83,12 @@ const MapChart = ({ setTooltipContent }) => {
                   }}
                   style={{
                     hover: {
-                      stroke: '#737373',
+                      stroke: colors.mapStroke,
                       strokeWidth: 0.7,
                       outline: 'none',
                     },
                     pressed: {
-                      stroke: '#737373',
+                      stroke: colors.mapStroke,
                       strokeWidth: 1,
                       outline: 'none',
                     },

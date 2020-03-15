@@ -4,7 +4,12 @@ import React, { useState, useContext, useEffect } from 'react';
 import Switch from 'react-switch';
 import { format, parseISO } from 'date-fns';
 import { ThemeContext } from 'styled-components';
-import { IoLogoGithub, IoLogoLinkedin } from 'react-icons/io';
+import {
+  IoLogoGithub,
+  IoLogoLinkedin,
+  IoIosMoon,
+  IoIosSunny,
+} from 'react-icons/io';
 import useSWR from 'swr';
 
 import api from '~/services/api';
@@ -26,11 +31,10 @@ import {
 const fetcher = url => api.get(url);
 
 const Layout = ({ children }) => {
-  const [checked, setChecked] = useState(false);
   const isMobile = useMobileWatcher();
 
   const { colors } = useContext(ThemeContext);
-  const { setCountriesData } = useContext(AppContext);
+  const { setCountriesData, toggleTheme, theme } = useContext(AppContext);
 
   const { data: generalData } = useSWR('/', fetcher, {
     suspense: true,
@@ -106,11 +110,11 @@ const Layout = ({ children }) => {
           {isMobile ? (
             <div>
               <Switch
-                checkedIcon={false}
-                uncheckedIcon={false}
+                checkedIcon={<IoIosMoon color="white" size={24} />}
+                uncheckedIcon={<IoIosSunny color="white" size={24} />}
                 className="switcher"
-                onChange={value => setChecked(value)}
-                checked={checked}
+                onChange={toggleTheme}
+                checked={theme?.title === 'dark'}
                 onColor="#777777"
                 offColor="#e8e8e8"
               />
@@ -122,8 +126,8 @@ const Layout = ({ children }) => {
                 checkedIcon={false}
                 uncheckedIcon={false}
                 className="switcher"
-                onChange={value => setChecked(value)}
-                checked={checked}
+                onChange={toggleTheme}
+                checked={theme?.title === 'dark'}
                 onColor="#777777"
                 offColor="#e8e8e8"
               />

@@ -57,6 +57,7 @@ export const TopBar = styled.div`
   justify-content: space-between;
   height: fit-content;
   padding: 2em 7.125rem 1em;
+  color: ${props => props.theme.colors.text};
 
   & > div {
     display: flex;
@@ -77,6 +78,12 @@ export const TopBar = styled.div`
       line-height: 4.44vw;
       & > [class~='switcher'] {
         margin: 0;
+
+        & svg {
+          margin-left: 2px;
+          position: absolute;
+          top: 2px;
+        }
       }
     }
   }
@@ -87,6 +94,8 @@ export const Link = styled(RouterLink)`
   line-height: inherit;
   text-decoration: none;
   font-weight: ${props => (props.selected ? '600' : 'unset')};
+  color: ${props =>
+    props.selected ? props.theme.colors.primary : props.theme.colors.text};
 
   :first-of-type {
     ::after {
@@ -108,11 +117,14 @@ export const Link = styled(RouterLink)`
 export const Numbers = styled.div`
   display: flex;
   align-items: center;
+  transition: all 0s !important;
 
   & > div {
     :not(:last-of-type) {
       margin-right: 5rem;
     }
+    transition: all 0s !important;
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -126,10 +138,12 @@ export const Numbers = styled.div`
     }
 
     :nth-child(3) {
-      color: #000;
+      color: ${props => props.theme.colors.deaths};
+      transition: all 0s !important;
     }
 
     & > h3 {
+      transition: all 0s !important;
       font-weight: 600;
       font-size: 1.5rem;
       line-height: 1.8125rem;
@@ -139,7 +153,7 @@ export const Numbers = styled.div`
     & > small {
       font-weight: 500;
       font-size: 1.25rem;
-      color: ${props => props.theme.colors.primary};
+      color: ${props => props.theme.colors.text};
       line-height: 1.5rem;
     }
   }
@@ -199,7 +213,7 @@ export const Footer = styled.footer`
 
 export const FooterLine = styled.div`
   display: flex;
-  color: ${props => props.theme.colors.primary};
+  color: ${props => props.theme.colors.text};
   align-items: center;
 
   & > p {
@@ -238,7 +252,7 @@ export const FooterLine = styled.div`
 `;
 
 export const LastUpdated = styled.small`
-  color: ${props => props.theme.colors.primary};
+  color: ${props => props.theme.colors.text};
   margin-top: 0.5rem;
   text-align: center;
   font-size: 1rem;
