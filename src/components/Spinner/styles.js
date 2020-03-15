@@ -1,3 +1,4 @@
+/* adapted from https://loading.io/css/ */
 import styled, { keyframes } from 'styled-components';
 
 const animated = keyframes`
