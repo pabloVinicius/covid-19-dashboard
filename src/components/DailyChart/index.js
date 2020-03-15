@@ -90,6 +90,11 @@ const MyResponsiveLine = () => {
             pointLabelYOffset={-12}
             useMesh
             theme={{
+              crosshair: {
+                line: {
+                  stroke: primary,
+                },
+              },
               axis: {
                 legend: {
                   text: {
