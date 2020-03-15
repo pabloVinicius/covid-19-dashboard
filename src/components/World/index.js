@@ -1,5 +1,5 @@
-import React, { useEffect, useState, memo, useContext, useMemo } from 'react';
-import { scaleLinear, scaleLog } from 'd3-scale';
+import React, { memo, useContext, useMemo } from 'react';
+import { scaleLog } from 'd3-scale';
 import { format } from 'date-fns';
 import {
   ComposableMap,

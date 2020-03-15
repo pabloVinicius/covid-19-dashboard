@@ -8,6 +8,7 @@
 
 ## Next steps
 - [ ] Portuguese translation
+- [ ] Add continent stats
 - [ ] Other languages translations
 - [ ] Add detailed data of some countries
 - [ ] Implement a scraper to get data from [Brazil official page about coronavirus](http://plataforma.saude.gov.br/novocoronavirus/#COVID-19-brazil)
