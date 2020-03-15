@@ -15,6 +15,12 @@ export const Tip = styled.small`
   line-height: 1.125rem;
   align-self: center;
   text-align: center;
+
+  @media screen and (max-width: 710px) {
+    font-size: 3vw;
+    margin-top: 1.11vw;
+    line-height: 3vw;
+  }
 `;
 
 export const CountryStats = styled.div`
@@ -28,5 +34,15 @@ export const CountryStats = styled.div`
   h5 {
     font-size: 1.25rem;
     font-weight: 600;
+  }
+
+  @media screen and (max-width: 710px) {
+    p {
+      font-size: 3.33vw;
+    }
+
+    h5 {
+      font-size: 4.44vw;
+    }
   }
 `;

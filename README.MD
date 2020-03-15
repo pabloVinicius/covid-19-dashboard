@@ -17,6 +17,7 @@
 ## Tech Stack
 -  [ReactJS](https://github.com/facebook/react)
 -  [React Router](https://github.com/ReactTraining/react-router)
+-  [SWR](https://github.com/zeit/swr)
 -  [styled-components](https://github.com/styled-components/styled-components)
 -  [React Icons](https://github.com/react-icons/react-icons)
 -  [Axios](https://github.com/axios/axios)

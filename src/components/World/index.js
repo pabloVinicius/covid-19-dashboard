@@ -10,6 +10,7 @@ import {
 } from 'react-simple-maps';
 
 import AppContext from '~/util/AppContext';
+import useMobileWatcher from '~/util/useMobileWatcher';
 
 import { Tip, Container, CountryStats } from './styles';
 
@@ -18,6 +19,9 @@ const geoUrl =
 
 const MapChart = ({ setTooltipContent }) => {
   const { countriesData } = useContext(AppContext);
+  const isMobile = useMobileWatcher();
+
+  console.log({ isMobile });
 
   const colorScale = useMemo(() => {
     const { lowestValue = 0, biggestValue = 0 } = countriesData;
@@ -30,7 +34,7 @@ const MapChart = ({ setTooltipContent }) => {
     <Container>
       <ComposableMap
         data-tip=""
-        width={600}
+        width={isMobile ? 450 : 600}
         height={215}
         projectionConfig={{
           rotate: [0, 0, 0],
@@ -93,7 +97,9 @@ const MapChart = ({ setTooltipContent }) => {
           }
         </Geographies>
       </ComposableMap>
-      <Tip>Hover for country stats</Tip>
+      <Tip>
+        {isMobile ? 'Click for country stats' : 'Hover for country stats'}
+      </Tip>
     </Container>
   );
 };

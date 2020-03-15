@@ -9,6 +9,7 @@ import useSWR from 'swr';
 
 import api from '~/services/api';
 import AppContext from '~/util/AppContext';
+import useMobileWatcher from '~/util/useMobileWatcher';
 
 import {
   Container,
@@ -26,6 +27,7 @@ const fetcher = url => api.get(url);
 
 const Layout = ({ children }) => {
   const [checked, setChecked] = useState(false);
+  const isMobile = useMobileWatcher();
 
   const { colors } = useContext(ThemeContext);
   const { setCountriesData } = useContext(AppContext);
@@ -86,25 +88,48 @@ const Layout = ({ children }) => {
     <Container>
       <Header>
         <TopBar>
-          <div>
-            <Link selected to="/">
-              World stats
-            </Link>
-            <Link to="/">Daily evolution</Link>
-          </div>
-          <div>
-            Light
-            <Switch
-              checkedIcon={false}
-              uncheckedIcon={false}
-              className="switcher"
-              onChange={value => setChecked(value)}
-              checked={checked}
-              onColor="#777777"
-              offColor="#e8e8e8"
-            />
-            Dark
-          </div>
+          {isMobile ? (
+            <div>
+              <Link selected to="/">
+                World
+              </Link>
+              <Link to="/">Daily</Link>
+            </div>
+          ) : (
+            <div>
+              <Link selected to="/">
+                World stats
+              </Link>
+              <Link to="/">Daily evolution</Link>
+            </div>
+          )}
+          {isMobile ? (
+            <div>
+              <Switch
+                checkedIcon={false}
+                uncheckedIcon={false}
+                className="switcher"
+                onChange={value => setChecked(value)}
+                checked={checked}
+                onColor="#777777"
+                offColor="#e8e8e8"
+              />
+            </div>
+          ) : (
+            <div>
+              Light
+              <Switch
+                checkedIcon={false}
+                uncheckedIcon={false}
+                className="switcher"
+                onChange={value => setChecked(value)}
+                checked={checked}
+                onColor="#777777"
+                offColor="#e8e8e8"
+              />
+              Dark
+            </div>
+          )}
         </TopBar>
         <h1>COVID-19 Information Tracker</h1>
         <Numbers>
@@ -128,26 +153,42 @@ const Layout = ({ children }) => {
           Last update:{' '}
           {format(
             parseISO(generalData?.data?.lastUpdate || new Date()),
-            'dd/MM/yyyy'
+            'dd/MM/yyyy, HH:mm'
           )}
         </LastUpdated>
-        <FooterLine>
-          <p>Developed by Pablo Cruz</p>
-          <a
-            href="https://www.linkedin.com/in/pablo-cruz-17901a177/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <IoLogoLinkedin size={24} color={colors.primary} />
-          </a>
-          <a
-            href="https://github.com/pabloVinicius/covid-19-dashboard"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <IoLogoGithub size={20} color={colors.primary} />
-          </a>
-        </FooterLine>
+        <div>
+          <FooterLine>
+            <p>Data api by mathdroid</p>
+            <div>
+              <a
+                href="https://github.com/mathdroid/covid-19-api"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <IoLogoGithub size={20} color={colors.primary} />
+              </a>
+            </div>
+          </FooterLine>
+          <FooterLine>
+            <p>Developed by Pablo Cruz</p>
+            <div>
+              <a
+                href="https://www.linkedin.com/in/pablo-cruz-17901a177/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <IoLogoLinkedin size={24} color={colors.primary} />
+              </a>
+              <a
+                href="https://github.com/pabloVinicius/covid-19-dashboard"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <IoLogoGithub size={20} color={colors.primary} />
+              </a>
+            </div>
+          </FooterLine>
+        </div>
       </Footer>
     </Container>
   );
