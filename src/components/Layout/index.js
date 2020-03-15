@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-empty-pattern */
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Switch from 'react-switch';
 import { format, parseISO } from 'date-fns';
 import { ThemeContext } from 'styled-components';

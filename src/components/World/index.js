@@ -23,8 +23,6 @@ const MapChart = ({ setTooltipContent }) => {
   const { colors } = useContext(ThemeContext);
   const isMobile = useMobileWatcher();
 
-  console.log({ isMobile });
-
   const colorScale = useMemo(() => {
     const { lowestValue = 0, biggestValue = 0 } = countriesData;
     return scaleLog()
