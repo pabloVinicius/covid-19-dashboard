@@ -118,13 +118,11 @@ export const Link = styled(RouterLink)`
 export const Numbers = styled.div`
   display: flex;
   align-items: center;
-  transition: all 0s !important;
 
   & > div {
     :not(:last-of-type) {
       margin-right: 5rem;
     }
-    transition: all 0s !important;
 
     display: flex;
     flex-direction: column;
@@ -139,12 +137,10 @@ export const Numbers = styled.div`
     }
 
     :nth-child(3) {
-      color: ${props => props.theme.colors.deaths};
-      transition: all 0s !important;
+      color: ${props => props.theme.colors.death};
     }
 
     & > h3 {
-      transition: all 0s !important;
       font-weight: 600;
       font-size: 1.5rem;
       line-height: 1.8125rem;

@@ -19,7 +19,7 @@ export default createGlobalStyle`
   }
 
   a, body, input, button, html {
-    color: ${props => props.theme.colors.primary};
+
     font-size: 1rem;
     font-family: 'Montserrat', sans-serif;
     background-color: ${props => props.theme.colors.background};
