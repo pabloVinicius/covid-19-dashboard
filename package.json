@@ -6,8 +6,9 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
-    "d3-fetch": "^1.1.2",
+    "axios": "^0.19.2",
     "d3-scale": "^3.2.1",
+    "date-fns": "^2.0.0-beta.5",
     "prop-types": "^15.7.2",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
@@ -17,7 +18,8 @@
     "react-simple-maps": "^1.0.0-beta.0",
     "react-switch": "^5.0.1",
     "react-tooltip": "^4.1.2",
-    "styled-components": "^5.0.1"
+    "styled-components": "^5.0.1",
+    "swr": "^0.1.18"
   },
   "scripts": {
     "dev": "react-app-rewired start",

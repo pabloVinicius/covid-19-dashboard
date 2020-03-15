@@ -21,6 +21,7 @@ export default createGlobalStyle`
     color: ${props => props.theme.colors.primary};
     font-size: 1rem;
     font-family: 'Montserrat', sans-serif;
+    transition: all 300ms;
   }
 
   button {

@@ -1,5 +1,14 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { Link as RouterLink } from 'react-router-dom';
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
 
 export const Container = styled.div`
   display: flex;
@@ -8,13 +17,14 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   background-color: ${props => props.theme.colors.background};
+  animation: ${fadeIn} 300ms ease-in;
 
   h1 {
     font-weight: 600;
     color: ${props => props.theme.colors.primary};
     line-height: 3.6875rem;
     font-size: 3rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     text-align: center;
   }
 `;
@@ -24,6 +34,7 @@ export const Header = styled.header`
   flex-direction: column;
   width: 100%;
   align-items: center;
+  margin-bottom: 1rem;
 `;
 
 export const TopBar = styled.div`
@@ -62,7 +73,6 @@ export const Link = styled(RouterLink)`
 export const Numbers = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 1.5rem;
 
   & > div {
     :not(:last-of-type) {
@@ -108,9 +118,10 @@ export const Content = styled.div`
 export const Footer = styled.footer`
   display: flex;
   width: 100%;
-  flex-direction: column;
   align-items: flex-end;
+  justify-content: space-between;
   padding: 0.5rem 1rem 0;
+  margin-bottom: 0.75rem;
 `;
 
 export const FooterLine = styled.div`
@@ -130,8 +141,13 @@ export const FooterLine = styled.div`
       margin-right: 0.5rem;
     }
   }
+`;
 
-  :first-of-type {
-    margin-bottom: 0.75rem;
-  }
+export const LastUpdated = styled.small`
+  color: ${props => props.theme.colors.primary};
+  margin-top: 0.5rem;
+  text-align: center;
+  font-size: 1rem;
+  line-height: 1.25rem;
+  margin-right: 1rem;
 `;

@@ -1,86 +1,101 @@
-import React, { useEffect, useState } from 'react';
-import { csv } from 'd3-fetch';
-import { scaleLinear } from 'd3-scale';
+import React, { useEffect, useState, memo, useContext, useMemo } from 'react';
+import { scaleLinear, scaleLog } from 'd3-scale';
+import { format } from 'date-fns';
 import {
   ComposableMap,
   Geographies,
   Geography,
   Sphere,
   Graticule,
-  ZoomableGroup,
 } from 'react-simple-maps';
+
+import AppContext from '~/util/AppContext';
+
+import { Tip, Container, CountryStats } from './styles';
 
 const geoUrl =
   'https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json';
 
-const colorScale = scaleLinear()
-  .domain([0.29, 0.68])
-  .range(['#ffedea', '#ff5233']);
-
-const rounded = num => {
-  if (num > 1000000000) {
-    return `${Math.round(num / 100000000) / 10}Bn`;
-  }
-  if (num > 1000000) {
-    return `${Math.round(num / 100000) / 10}M`;
-  }
-  return `${Math.round(num / 100) / 10}K`;
-};
-
 const MapChart = ({ setTooltipContent }) => {
-  const [data, setData] = useState([]);
+  const { countriesData } = useContext(AppContext);
 
-  useEffect(() => {
-    csv(`/vulnerability.csv`).then(data => {
-      setData(data);
-    });
-  }, []);
+  const colorScale = useMemo(() => {
+    const { lowestValue = 0, biggestValue = 0 } = countriesData;
+    return scaleLog()
+      .domain([lowestValue, biggestValue])
+      .range(['#E6A6A6', '#E60000']);
+  }, [countriesData]);
 
   return (
-    <ComposableMap
-      data-tip=""
-      width={600}
-      height={215}
-      projectionConfig={{
-        rotate: [0, 0, 0],
-        scale: 80,
-      }}
-    >
-      <Sphere stroke="#E4E5E6" strokeWidth={0.5} />
-      <Graticule stroke="#E4E5E6" strokeWidth={0.5} />
-      <Geographies geography={geoUrl}>
-        {({ geographies }) =>
-          geographies.map(geo => (
-            <Geography
-              key={geo.rsmKey}
-              geography={geo}
-              onMouseEnter={() => {
-                const { NAME, POP_EST } = geo.properties;
-                setTooltipContent(`${NAME} — ${rounded(POP_EST)}`);
-              }}
-              onMouseLeave={() => {
-                setTooltipContent('');
-              }}
-              style={{
-                default: {
-                  fill: '#D6D6DA',
-                  outline: 'none',
-                },
-                hover: {
-                  fill: '#F53',
-                  outline: 'none',
-                },
-                pressed: {
-                  fill: '#E42',
-                  outline: 'none',
-                },
-              }}
-            />
-          ))
-        }
-      </Geographies>
-    </ComposableMap>
+    <Container>
+      <ComposableMap
+        data-tip=""
+        width={600}
+        height={215}
+        projectionConfig={{
+          rotate: [0, 0, 0],
+          scale: 80,
+        }}
+      >
+        <Sphere stroke="#E4E5E6" strokeWidth={0.5} />
+        <Graticule stroke="#E4E5E6" strokeWidth={0.5} />
+        <Geographies geography={geoUrl}>
+          {({ geographies }) =>
+            geographies.map(geo => {
+              const d = countriesData[geo.properties.ISO_A3];
+              return (
+                <Geography
+                  key={geo.rsmKey}
+                  geography={geo}
+                  fill={d ? colorScale(d.confirmed) : '#D6D6DA'}
+                  onMouseEnter={() => {
+                    const { NAME, ISO_A3 } = geo.properties;
+                    const country = countriesData[ISO_A3];
+                    const {
+                      confirmed = 0,
+                      deaths = 0,
+                      recovered = 0,
+                      lastUpdate,
+                    } = country || {};
+                    setTooltipContent(
+                      <CountryStats>
+                        <h5>{NAME}</h5>
+                        <p>Confirmed: {confirmed}</p>
+                        <p>Recovered: {recovered}</p>
+                        <p>Deaths: {deaths}</p>
+                        <p>
+                          Last update:{' '}
+                          {lastUpdate !== undefined
+                            ? format(new Date(lastUpdate), 'dd/MM/yyyy')
+                            : '-'}
+                        </p>
+                      </CountryStats>
+                    );
+                  }}
+                  onMouseLeave={() => {
+                    setTooltipContent('');
+                  }}
+                  style={{
+                    hover: {
+                      stroke: '#737373',
+                      strokeWidth: 0.7,
+                      outline: 'none',
+                    },
+                    pressed: {
+                      stroke: '#737373',
+                      strokeWidth: 1,
+                      outline: 'none',
+                    },
+                  }}
+                />
+              );
+            })
+          }
+        </Geographies>
+      </ComposableMap>
+      <Tip>Hover for country stats</Tip>
+    </Container>
   );
 };
 
-export default MapChart;
+export default memo(MapChart);
