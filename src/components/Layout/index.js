@@ -2,7 +2,9 @@
 /* eslint-disable no-empty-pattern */
 import React, { useContext, useEffect } from 'react';
 import Switch from 'react-switch';
+import * as time from 'd3-time';
 import { format, parseISO } from 'date-fns';
+import { useHistory } from 'react-router-dom';
 import { ThemeContext } from 'styled-components';
 import {
   IoLogoGithub,
@@ -32,15 +34,25 @@ const fetcher = url => api.get(url);
 
 const Layout = ({ children }) => {
   const isMobile = useMobileWatcher();
+  const {
+    location: { pathname },
+  } = useHistory();
 
   const { colors } = useContext(ThemeContext);
-  const { setCountriesData, toggleTheme, theme } = useContext(AppContext);
+  const { setCountriesData, toggleTheme, theme, setDailyData } = useContext(
+    AppContext
+  );
 
   const { data: generalData } = useSWR('/', fetcher, {
     suspense: true,
   });
 
   const { data: casesData } = useSWR('/confirmed', fetcher, {
+    suspense: true,
+    revalidateOnFocus: false,
+  });
+
+  const { data: dailyData } = useSWR('/daily', fetcher, {
     suspense: true,
     revalidateOnFocus: false,
   });
@@ -88,23 +100,58 @@ const Layout = ({ children }) => {
     }
   }, [casesData, setCountriesData]);
 
+  useEffect(() => {
+    if (dailyData?.data) {
+      const confirmedData = [];
+      const recoveredData = [];
+      dailyData.data.forEach(el => {
+        const formatedDate = format(new Date(el.reportDate), 'MM/dd/yyyy');
+        confirmedData.push({
+          x: formatedDate,
+          y: el.totalConfirmed,
+        });
+        recoveredData.push({
+          x: formatedDate,
+          y: el.totalRecovered || 0,
+        });
+      });
+
+      setDailyData([
+        {
+          id: 'Confirmed',
+          color: colors.confirmed,
+          data: confirmedData,
+        },
+        {
+          id: 'Recovered',
+          color: colors.recovered,
+          data: recoveredData,
+        },
+      ]);
+    }
+  }, [dailyData, setDailyData, colors]);
+
   return (
     <Container>
       <Header>
         <TopBar>
           {isMobile ? (
             <div>
-              <Link selected to="/">
+              <Link selected={pathname === '/'} to="/">
                 World
               </Link>
-              <Link to="/">Daily</Link>
+              <Link selected={pathname === '/daily'} to="/daily">
+                Daily
+              </Link>
             </div>
           ) : (
             <div>
-              <Link selected to="/">
+              <Link selected={pathname === '/'} to="/">
                 World stats
               </Link>
-              <Link to="/">Daily evolution</Link>
+              <Link selected={pathname === '/daily'} to="/daily">
+                Daily evolution
+              </Link>
             </div>
           )}
           {isMobile ? (
@@ -157,7 +204,7 @@ const Layout = ({ children }) => {
           Last update:{' '}
           {format(
             parseISO(generalData?.data?.lastUpdate || new Date()),
-            'dd/MM/yyyy, HH:mm'
+            'MM/dd/yyyy, HH:mm'
           )}
         </LastUpdated>
         <div>

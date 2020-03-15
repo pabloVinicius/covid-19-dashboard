@@ -70,7 +70,7 @@ const MapChart = ({ setTooltipContent }) => {
                         <p>
                           Last update:{' '}
                           {lastUpdate !== undefined
-                            ? format(new Date(lastUpdate), 'dd/MM/yyyy')
+                            ? format(new Date(lastUpdate), 'MM/dd/yyyy')
                             : '-'}
                         </p>
                       </CountryStats>

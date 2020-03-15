@@ -9,10 +9,15 @@ import usePersistedState from './util/usePersistedState';
 
 function App() {
   const [countriesData, setCountriesData] = useState({});
+  const [dailyData, setDailyData] = useState({});
   const [theme, setTheme] = usePersistedState('theme', dark);
 
   const handleCountriesChange = useCallback(value => setCountriesData(value), [
     setCountriesData,
+  ]);
+
+  const handleDailyChange = useCallback(value => setDailyData(value), [
+    setDailyData,
   ]);
 
   const toggleTheme = useCallback(
@@ -27,6 +32,8 @@ function App() {
         setCountriesData: handleCountriesChange,
         toggleTheme,
         theme,
+        dailyData,
+        setDailyData: handleDailyChange,
       }}
     >
       <ThemeProvider theme={theme}>

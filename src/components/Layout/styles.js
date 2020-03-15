@@ -130,11 +130,11 @@ export const Numbers = styled.div`
     align-items: center;
 
     :nth-child(1) {
-      color: #e60000;
+      color: ${props => props.theme.colors.confirmed};
     }
 
     :nth-child(2) {
-      color: #70a800;
+      color: ${props => props.theme.colors.recovered};
     }
 
     :nth-child(3) {
