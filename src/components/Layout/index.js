@@ -2,7 +2,6 @@
 /* eslint-disable no-empty-pattern */
 import React, { useContext, useEffect } from 'react';
 import Switch from 'react-switch';
-import * as time from 'd3-time';
 import { format, parseISO } from 'date-fns';
 import { useHistory } from 'react-router-dom';
 import { ThemeContext } from 'styled-components';
