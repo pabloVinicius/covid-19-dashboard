@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 
 import Index from './pages/Index';
 import Daily from './pages/Daily';
@@ -10,6 +10,7 @@ export default () => {
       <Switch>
         <Route path="/" exact component={Index} />
         <Route path="/daily" component={Daily} />
+        <Redirect to="/" />
       </Switch>
     </BrowserRouter>
   );
