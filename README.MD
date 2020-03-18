@@ -1,5 +1,5 @@
 <h1 align="center">
-  Covid-19 Tracker Dashboard
+  Covid-19 World Stats
 </h1>
 
 > All informations comming from [covid-19-api](https://github.com/mathdroid/covid-19-api) by [mathdroid](https://github.com/mathdroid).

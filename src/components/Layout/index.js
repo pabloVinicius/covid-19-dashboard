@@ -181,7 +181,7 @@ const Layout = ({ children }) => {
             </div>
           )}
         </TopBar>
-        <h1>COVID-19 Information Tracker</h1>
+        <h1>COVID-19 World Stats</h1>
         <Numbers>
           <div>
             <h3>{generalData?.data?.confirmed?.value || ''}</h3>
