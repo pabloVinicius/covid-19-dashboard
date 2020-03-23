@@ -42,12 +42,14 @@ module.exports.handler = (event, context, callback) => {
     })
     .end()
     .then(response => {
+      console.log({ response });
       return callback(null, {
         statusCode: 200,
         body: JSON.stringify(response),
       });
     })
     .catch(err => {
+      console.log({ err });
       return callback(null, {
         statusCode: 500,
         body: JSON.stringify(err),
