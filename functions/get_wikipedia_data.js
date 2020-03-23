@@ -1,55 +1,59 @@
 /* eslint-disable no-console */
-const Nightmare = require('nightmare');
+const cheerio = require('cheerio');
+const axios = require('axios');
 
 const url =
   'https://en.wikipedia.org/wiki/2020_coronavirus_pandemic_in_Brazil#cite_note-107';
 
-const nightmare = Nightmare({ show: false });
-
 module.exports.handler = (event, context, callback) => {
-  nightmare
-    .goto(url)
-    .evaluate(() => {
-      const rows = document.querySelectorAll('table.wikitable > tbody > tr');
-      const footer = document.querySelectorAll(
-        'table.wikitable > tfoot > tr > th'
-      );
+  axios
+    .get(url)
+    .then(res => {
+      const { data } = res;
+      const $ = cheerio.load(data);
+
+      const rows = $('table.wikitable > tbody > tr');
       const states = {};
-      rows.forEach(row => {
-        const data = row.querySelectorAll('td');
+
+      rows.each((_, row) => {
         try {
-          const [state, confirmed, deaths] = data;
-          const stateName = state.innerText.slice(1);
-          const stateConfirmed = confirmed.innerText.match(/^\d+/)[0];
-          const stateDeaths = deaths.innerText;
+          const cheerioRow = $(row);
+          const tds = cheerioRow.find('td');
+          const cheerioTds = tds.map((i, el) => $(el));
+
+          const stateName = cheerioTds[0].text().trim();
+          const stateConfirmed = cheerioTds[1]
+            .text()
+            .trim()
+            .match(/^\d+/)[0];
+          const stateDeaths = cheerioTds[2].text().trim();
 
           states[stateName] = {
             confirmed: stateConfirmed,
             deaths: stateDeaths,
           };
         } catch (err) {
-          console.log({ err });
+          // console.log('erro', err)
         }
       });
 
-      const [, totalConfirmed, totalDeaths] = footer;
+      const footerThs = rows
+        .last()
+        .children()
+        .map((i, el) => $(el));
 
-      return {
-        confirmed: totalConfirmed.innerText,
-        deaths: totalDeaths.innerText,
+      const result = {
+        confirmed: footerThs[1].text().trim(),
+        deaths: footerThs[2].text().trim(),
         states,
       };
-    })
-    .end()
-    .then(response => {
-      console.log({ response });
+
       return callback(null, {
         statusCode: 200,
-        body: JSON.stringify(response),
+        body: JSON.stringify(result),
       });
     })
     .catch(err => {
-      console.log({ err });
       return callback(null, {
         statusCode: 500,
         body: JSON.stringify(err),
