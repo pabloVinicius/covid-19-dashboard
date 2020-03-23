@@ -1,13 +1,4 @@
 [build]
   functions = "functions"
-  command = "npm run build"
+  command = "yarn build"
   publish = "build"
-
-[dev]
-  # Local dev command. A.k.a npm start
-  command = "react-scripts start"
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
