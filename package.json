@@ -10,6 +10,7 @@
     "axios": "^0.19.2",
     "d3-scale": "^3.2.1",
     "date-fns": "^2.0.0-beta.5",
+    "mongodb": "^3.5.5",
     "prop-types": "^15.7.2",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
@@ -23,7 +24,7 @@
     "swr": "^0.1.18"
   },
   "scripts": {
-    "dev": "react-app-rewired start",
+    "dev": "netlify dev -c \"react-app-rewired start\"",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject"
@@ -53,6 +54,7 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^2.5.0",
+    "netlify-cli": "^2.40.0",
     "prettier": "^1.19.1",
     "react-app-rewired": "^2.1.5"
   }
