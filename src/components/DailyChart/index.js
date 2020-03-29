@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { ResponsiveLine } from '@nivo/line';
 import { ThemeContext } from 'styled-components';
+import { useTranslation } from 'react-i18next';
 
 import { Container, Wrapper, Tip, Scroller } from './styles';
 import AppContext from '~/util/AppContext';
@@ -13,6 +14,7 @@ const MyResponsiveLine = () => {
   } = useContext(ThemeContext);
 
   const isMobile = useMobileWatcher();
+  const { t } = useTranslation();
 
   const legends = [
     {
@@ -113,9 +115,9 @@ const MyResponsiveLine = () => {
         </Container>
       </Scroller>
       {isMobile ? (
-        <Tip>Swipe horizontally to see data. Click for details</Tip>
+        <Tip>{t('swipe horizontally to see data')}</Tip>
       ) : (
-        <Tip>Hover for details</Tip>
+        <Tip>{t('hover for details')}</Tip>
       )}
     </Wrapper>
   );

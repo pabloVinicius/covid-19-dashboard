@@ -69,6 +69,10 @@ export const TopBar = styled.div`
     & > [class~='switcher'] {
       margin: 0 1em;
     }
+
+    & > .country-select > .flag-select__options {
+      background: transparent;
+    }
   }
 
   @media screen and (max-width: 710px) {

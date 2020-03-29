@@ -2,6 +2,7 @@ import React, { memo, useContext, useMemo } from 'react';
 import { ThemeContext } from 'styled-components';
 import { scaleLog } from 'd3-scale';
 import { format } from 'date-fns';
+import { useTranslation } from 'react-i18next';
 import {
   ComposableMap,
   Geographies,
@@ -19,7 +20,7 @@ const geoUrl =
   'https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json';
 
 const MapChart = ({ setTooltipContent }) => {
-  const { countriesData } = useContext(AppContext);
+  const { countriesData, language } = useContext(AppContext);
   const { colors } = useContext(ThemeContext);
   const isMobile = useMobileWatcher();
 
@@ -29,6 +30,8 @@ const MapChart = ({ setTooltipContent }) => {
       .domain([lowestValue, biggestValue])
       .range(['#E6A6A6', '#E60000']);
   }, [countriesData]);
+
+  const { t } = useTranslation();
 
   return (
     <Container>
@@ -63,14 +66,14 @@ const MapChart = ({ setTooltipContent }) => {
                     } = country || {};
                     setTooltipContent(
                       <CountryStats>
-                        <h5>{NAME}</h5>
-                        <p>Confirmed: {confirmed}</p>
-                        <p>Recovered: {recovered}</p>
-                        <p>Deaths: {deaths}</p>
+                        <h5>{t('contries:' + NAME)}</h5>
+                        <p>{t('confirmed')}: {confirmed}</p>
+                        <p>{t('recovered')}: {recovered}</p>
+                        <p>{t('deaths')}: {deaths}</p>
                         <p>
-                          Last update:{' '}
+                          {t('last update')}:{' '}
                           {lastUpdate !== undefined
-                            ? format(new Date(lastUpdate), 'MM/dd/yyyy')
+                            ? format(new Date(lastUpdate), language === 'en' ? 'MM/dd/yyyy' : 'dd/MM/yyyy')
                             : '-'}
                         </p>
                       </CountryStats>
@@ -98,7 +101,7 @@ const MapChart = ({ setTooltipContent }) => {
         </Geographies>
       </ComposableMap>
       <Tip>
-        {isMobile ? 'Click for country stats' : 'Hover for country stats'}
+        {isMobile ? t('click for country stats') : t('hover for country stats')}
       </Tip>
     </Container>
   );
