@@ -2,9 +2,11 @@
 /* eslint-disable no-empty-pattern */
 import React, { useContext, useEffect } from 'react';
 import Switch from 'react-switch';
+import CountrySelect from 'react-flags-select';
 import { format, parseISO } from 'date-fns';
 import { useHistory } from 'react-router-dom';
 import { ThemeContext } from 'styled-components';
+import { useTranslation } from 'react-i18next';
 import {
   IoLogoGithub,
   IoLogoLinkedin,
@@ -12,7 +14,7 @@ import {
   IoIosSunny,
 } from 'react-icons/io';
 import useSWR from 'swr';
-
+import 'react-flags-select/css/react-flags-select.css';
 import api from '~/services/api';
 import AppContext from '~/util/AppContext';
 import useMobileWatcher from '~/util/useMobileWatcher';
@@ -38,7 +40,7 @@ const Layout = ({ children }) => {
   } = useHistory();
 
   const { colors } = useContext(ThemeContext);
-  const { setCountriesData, toggleTheme, theme, setDailyData } = useContext(
+  const { setCountriesData, toggleTheme, theme, toggleLanguage, language, setDailyData } = useContext(
     AppContext
   );
 
@@ -55,6 +57,8 @@ const Layout = ({ children }) => {
     suspense: true,
     revalidateOnFocus: false,
   });
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (casesData?.data) {
@@ -104,7 +108,7 @@ const Layout = ({ children }) => {
       const confirmedData = [];
       const recoveredData = [];
       dailyData.data.forEach(el => {
-        const formatedDate = format(new Date(el.reportDate), 'MM/dd/yyyy');
+        const formatedDate = format(new Date(el.reportDate), language === 'en' ? 'MM/dd/yyyy' : 'dd/MM/yyyy');
         confirmedData.push({
           x: formatedDate,
           y: el.totalConfirmed,
@@ -137,23 +141,23 @@ const Layout = ({ children }) => {
           {isMobile ? (
             <div>
               <Link selected={pathname === '/'} to="/">
-                World
+                {t('world')}
               </Link>
               <Link selected={pathname === '/daily'} to="/daily">
-                Daily
+                {t('daily')}
               </Link>
             </div>
           ) : (
             <div>
               <Link selected={pathname === '/'} to="/">
-                World stats
+               {t('world stats')}
               </Link>
               <Link selected={pathname === '/daily'} to="/daily">
-                Daily evolution
+                {t('daily evolution')}
               </Link>
             </div>
           )}
-          {isMobile ? (
+          {/* {isMobile ? (
             <div>
               <Switch
                 checkedIcon={<IoIosMoon color="white" size={24} />}
@@ -179,36 +183,57 @@ const Layout = ({ children }) => {
               />
               Dark
             </div>
-          )}
+          )} */}
+            <div>
+              <CountrySelect 
+                className='country-select'
+                countries={['BR', 'US']}
+                defaultCountry={language === 'ptBR' ? 'BR' : 'US'}
+                onSelect={toggleLanguage}
+                selectedSize={isMobile ? 18 : 20}
+                customLabels={{"BR": t('languages:portuguese'), "US": t('languages:english') }}
+                showSelectedLabel={false}
+              />
+              
+              <Switch
+                checkedIcon={<IoIosMoon color="white" size={24} />}
+                uncheckedIcon={<IoIosSunny color="rgb(240, 210, 0)" size={24} />}
+                className="switcher"
+                onChange={toggleTheme}
+                checked={theme?.title === 'dark'}
+                onColor="#777777"
+                offColor="#e8e8e8"
+              /> 
+            </div>
         </TopBar>
-        <h1>COVID-19 World Stats</h1>
+        <h1>{t('covid world stats')}</h1>
         <Numbers>
           <div>
             <h3>{generalData?.data?.confirmed?.value || ''}</h3>
-            <small>Confirmed</small>
+            <small>{t('confirmed')}</small>
           </div>
           <div>
             <h3>{generalData?.data?.recovered?.value || ''}</h3>
-            <small>Recovered</small>
+            <small>{t('recovered')}</small>
           </div>
           <div>
             <h3>{generalData?.data?.deaths?.value || ''}</h3>
-            <small>Deaths</small>
+            <small>{t('deaths')}</small>
           </div>
         </Numbers>
       </Header>
       <Content>{children}</Content>
       <Footer>
         <LastUpdated>
-          Last update:{' '}
+          {t('last update')}:{' '}
           {format(
             parseISO(generalData?.data?.lastUpdate || new Date()),
-            'MM/dd/yyyy, HH:mm'
+            language === 'en' ? 'MM/dd/yyyy HH:mm' : 'dd/MM/yyyy HH:mm'
           )}
         </LastUpdated>
         <div>
           <FooterLine>
-            <p>Data api by mathdroid</p>
+            <p>{t('data api by')} mathdroid</p>
             <div>
               <a
                 href="https://github.com/mathdroid/covid-19-api"
@@ -220,7 +245,7 @@ const Layout = ({ children }) => {
             </div>
           </FooterLine>
           <FooterLine>
-            <p>Developed by Pablo Cruz</p>
+            <p>{t('developed by')} Pablo Cruz</p>
             <div>
               <a
                 href="https://www.linkedin.com/in/pablo-cruz-17901a177/"
