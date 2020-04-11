@@ -1,24 +1,27 @@
 {
     "translations": {
+        "title": "Estatísticas Mundiais do COVID-19",
         "confirmed": "Confirmados",
         "recovered": "Recuperados",
         "deaths": "Mortos",
         "world": "Mundial",
         "daily": "Diário",
         "covid world stats": "Estatísticas Mundiais do COVID-19",
-        "world stats": "Estátisticas Mundiais",
+        "world stats": "Estatísticas Mundiais",
         "daily evolution": "Evolução Diária",
         "last update": "Última atualização",
         "data api by": "Data API por",
         "developed by": "Desenvolvido por",
-        "hover for country stats": "Passe o mouse para as estatísticas do país",
-        "click for country stats": "Clique para as estatísticas do país",
+        "hover for country stats": "Passe o mouse para ver as estatísticas do país",
+        "click for country stats": "Clique para ver as estatísticas do país",
         "hover for details": "Passe o mouse para ver os detalhes",
-        "swipe horizontally to see data": "Deslize horizontalmente para ver os dados. Clique para detalhes"
+        "swipe horizontally to see data": "Deslize horizontalmente para ver os dados. Clique para ver os detalhes",
+        "count": "Total",
+        "date": "Data"
     },
     "languages": {
         "portuguese": "Português",
-        "english": "Inglês"
+        "english": "English"
     },
     "contries": {
         "Afghanistan": "Afeganistão",

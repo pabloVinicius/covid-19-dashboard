@@ -1,5 +1,6 @@
 {
     "translations": {
+        "title": "COVID-19 World Stats",
         "confirmed": "Confirmed",
         "recovered": "Recovered",
         "deaths": "Deaths",
@@ -14,10 +15,12 @@
         "hover for country stats": "Hover for country stats",
         "click for country stats": "Click for country stats",
         "hover for details": "Hover for details",
-        "swipe horizontally to see data": "Swipe horizontally to see data. Click for details"
+        "swipe horizontally to see data": "Swipe horizontally to see data. Click for details",
+        "count": "Count",
+        "date": "Date"
     },
     "languages": {
-        "portuguese": "Portuguese",
+        "portuguese": "Português",
         "english": "English"
     },
     "contries": {

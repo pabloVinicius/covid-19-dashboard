@@ -40,9 +40,14 @@ const Layout = ({ children }) => {
   } = useHistory();
 
   const { colors } = useContext(ThemeContext);
-  const { setCountriesData, toggleTheme, theme, toggleLanguage, language, setDailyData } = useContext(
-    AppContext
-  );
+  const {
+    setCountriesData,
+    toggleTheme,
+    theme,
+    toggleLanguage,
+    language,
+    setDailyData,
+  } = useContext(AppContext);
 
   const { data: generalData } = useSWR('/', fetcher, {
     suspense: true,
@@ -107,8 +112,12 @@ const Layout = ({ children }) => {
     if (dailyData?.data) {
       const confirmedData = [];
       const recoveredData = [];
+
       dailyData.data.forEach(el => {
-        const formatedDate = format(new Date(el.reportDate), language === 'en' ? 'MM/dd/yyyy' : 'dd/MM/yyyy');
+        const formatedDate = format(
+          new Date(el.reportDate),
+          language === 'en' ? 'MM/dd/yyyy' : 'dd/MM/yyyy'
+        );
         confirmedData.push({
           x: formatedDate,
           y: el.totalConfirmed,
@@ -121,18 +130,20 @@ const Layout = ({ children }) => {
 
       setDailyData([
         {
-          id: 'Confirmed',
+          id: t('confirmed'),
           color: colors.confirmed,
           data: confirmedData,
         },
         {
-          id: 'Recovered',
+          id: t('recovered'),
           color: colors.recovered,
           data: recoveredData,
         },
       ]);
     }
-  }, [dailyData, setDailyData, colors]);
+
+    document.title = t('title');
+  }, [dailyData, setDailyData, colors, language]);
 
   return (
     <Container>
@@ -150,61 +161,37 @@ const Layout = ({ children }) => {
           ) : (
             <div>
               <Link selected={pathname === '/'} to="/">
-               {t('world stats')}
+                {t('world stats')}
               </Link>
               <Link selected={pathname === '/daily'} to="/daily">
                 {t('daily evolution')}
               </Link>
             </div>
           )}
-          {/* {isMobile ? (
-            <div>
-              <Switch
-                checkedIcon={<IoIosMoon color="white" size={24} />}
-                uncheckedIcon={<IoIosSunny color="white" size={24} />}
-                className="switcher"
-                onChange={toggleTheme}
-                checked={theme?.title === 'dark'}
-                onColor="#777777"
-                offColor="#e8e8e8"
-              />
-            </div>
-          ) : (
-            <div>
-              Light
-              <Switch
-                checkedIcon={false}
-                uncheckedIcon={false}
-                className="switcher"
-                onChange={toggleTheme}
-                checked={theme?.title === 'dark'}
-                onColor="#777777"
-                offColor="#e8e8e8"
-              />
-              Dark
-            </div>
-          )} */}
-            <div>
-              <CountrySelect 
-                className='country-select'
-                countries={['BR', 'US']}
-                defaultCountry={language === 'ptBR' ? 'BR' : 'US'}
-                onSelect={toggleLanguage}
-                selectedSize={isMobile ? 18 : 20}
-                customLabels={{"BR": t('languages:portuguese'), "US": t('languages:english') }}
-                showSelectedLabel={false}
-              />
-              
-              <Switch
-                checkedIcon={<IoIosMoon color="white" size={24} />}
-                uncheckedIcon={<IoIosSunny color="rgb(240, 210, 0)" size={24} />}
-                className="switcher"
-                onChange={toggleTheme}
-                checked={theme?.title === 'dark'}
-                onColor="#777777"
-                offColor="#e8e8e8"
-              /> 
-            </div>
+          <div>
+            <CountrySelect
+              className="country-select"
+              countries={['BR', 'US']}
+              defaultCountry={language === 'ptBR' ? 'BR' : 'US'}
+              onSelect={toggleLanguage}
+              selectedSize={isMobile ? 18 : 20}
+              customLabels={{
+                BR: t('languages:portuguese'),
+                US: t('languages:english'),
+              }}
+              showSelectedLabel={false}
+            />
+
+            <Switch
+              checkedIcon={<IoIosMoon color="white" size={24} />}
+              uncheckedIcon={<IoIosSunny color="rgb(240, 210, 0)" size={24} />}
+              className="switcher"
+              onChange={toggleTheme}
+              checked={theme?.title === 'dark'}
+              onColor="#777777"
+              offColor="#e8e8e8"
+            />
+          </div>
         </TopBar>
         <h1>{t('covid world stats')}</h1>
         <Numbers>

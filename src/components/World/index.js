@@ -66,14 +66,17 @@ const MapChart = ({ setTooltipContent }) => {
                     } = country || {};
                     setTooltipContent(
                       <CountryStats>
-                        <h5>{t('contries:' + NAME)}</h5>
-                        <p>{t('confirmed')}: {confirmed}</p>
-                        <p>{t('recovered')}: {recovered}</p>
-                        <p>{t('deaths')}: {deaths}</p>
+                        <h5>{t(`contries:${NAME}`)}</h5>
+                        <p>{`${t('confirmed')}: ${confirmed}`}</p>
+                        <p>{`${t('recovered')}: ${recovered}`}</p>
+                        <p>{`${t('deaths')}: ${deaths}`}</p>
                         <p>
                           {t('last update')}:{' '}
                           {lastUpdate !== undefined
-                            ? format(new Date(lastUpdate), language === 'en' ? 'MM/dd/yyyy' : 'dd/MM/yyyy')
+                            ? format(
+                                new Date(lastUpdate),
+                                language === 'en' ? 'MM/dd/yyyy' : 'dd/MM/yyyy'
+                              )
                             : '-'}
                         </p>
                       </CountryStats>

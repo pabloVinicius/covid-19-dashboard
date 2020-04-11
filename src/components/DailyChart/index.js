@@ -8,7 +8,7 @@ import AppContext from '~/util/AppContext';
 import useMobileWatcher from '~/util/useMobileWatcher';
 
 const MyResponsiveLine = () => {
-  const { dailyData } = useContext(AppContext);
+  const { dailyData, language } = useContext(AppContext);
   const {
     colors: { recovered, confirmed, primary },
   } = useContext(ThemeContext);
@@ -52,8 +52,12 @@ const MyResponsiveLine = () => {
           <ResponsiveLine
             data={dailyData}
             margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
-            xScale={{ type: 'time', format: '%m/%d/%Y', precision: 'day' }}
-            xFormat="time:%Y/%m/%d"
+            xScale={{
+              type: 'time',
+              format: language === 'en' ? '%m/%d/%Y' : '%d/%m/%Y',
+              precision: 'day',
+            }}
+            xFormat={`time:${language === 'en' ? '%m/%d/%Y' : '%d/%m/%Y'}`}
             yScale={{
               type: 'linear',
               min: 'auto',
@@ -70,7 +74,7 @@ const MyResponsiveLine = () => {
               format: '%b %d',
               tickValues: `every ${splitNumber} days`,
               tickRotation: 0,
-              legend: 'Date',
+              legend: t('date'),
               legendOffset: 36,
               legendPosition: 'middle',
             }}
@@ -79,7 +83,7 @@ const MyResponsiveLine = () => {
               tickSize: 5,
               tickPadding: 5,
               tickRotation: 0,
-              legend: 'Count',
+              legend: t('count'),
               legendOffset: -50,
               legendPosition: 'middle',
             }}
