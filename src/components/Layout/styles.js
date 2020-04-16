@@ -5,6 +5,7 @@ const fadeIn = keyframes`
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -68,6 +69,16 @@ export const TopBar = styled.div`
 
     & > [class~='switcher'] {
       margin: 0 1em;
+
+      & svg {
+        margin-left: 2px;
+        position: absolute;
+        top: 2px;
+      }
+    }
+
+    & > .country-select > .flag-select__options {
+      background: ${props => props.theme.colors.background};
     }
   }
 
@@ -77,14 +88,9 @@ export const TopBar = styled.div`
     & > div {
       font-size: 4.44vw;
       line-height: 4.44vw;
+
       & > [class~='switcher'] {
         margin: 0;
-
-        & svg {
-          margin-left: 2px;
-          position: absolute;
-          top: 2px;
-        }
       }
     }
   }
