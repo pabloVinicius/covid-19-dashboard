@@ -7,13 +7,16 @@
 ### [See live](https://covid19.data.eti.br)
 
 ## Next steps
-- [ ] Portuguese translation
+- [x] Portuguese translation
 - [ ] Add continent stats
 - [ ] Other languages translations
 - [ ] Add detailed data of some countries
 - [ ] Implement a scraper to get data from [Brazil official page about coronavirus](http://plataforma.saude.gov.br/novocoronavirus/#COVID-19-brazil)
 - [ ] Add basic informations about prevention and related things
 - [ ] Add other graphics/tables to show data
+
+## Special thanks to:
+ - [islanrodrigues](https://github.com/islanrodrigues) for implementing portuguese translation :D
 
 ## Tech Stack
 -  [ReactJS](https://github.com/facebook/react)
