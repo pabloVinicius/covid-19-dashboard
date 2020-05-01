@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-empty-pattern */
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
 import Switch from 'react-switch';
 import CountrySelect from 'react-flags-select';
 import { format, parseISO } from 'date-fns';
@@ -18,6 +18,7 @@ import 'react-flags-select/css/react-flags-select.css';
 import api from '~/services/api';
 import AppContext from '~/util/AppContext';
 import useMobileWatcher from '~/util/useMobileWatcher';
+import { decimalFormat } from '~/util/formatters';
 
 import {
   Container,
@@ -143,7 +144,12 @@ const Layout = ({ children }) => {
     }
 
     document.title = t('title');
-  }, [dailyData, setDailyData, colors, language]);
+  }, [dailyData, setDailyData, colors, language, t]);
+
+  const currentLanguage = useMemo(
+    () => (language === 'ptBR' ? undefined : 'en-us'),
+    [language]
+  );
 
   return (
     <Container>
@@ -196,15 +202,27 @@ const Layout = ({ children }) => {
         <h1>{t('covid world stats')}</h1>
         <Numbers>
           <div>
-            <h3>{generalData?.data?.confirmed?.value || ''}</h3>
+            <h3>
+              {decimalFormat(
+                generalData?.data?.confirmed?.value,
+                currentLanguage
+              )}
+            </h3>
             <small>{t('confirmed')}</small>
           </div>
           <div>
-            <h3>{generalData?.data?.recovered?.value || ''}</h3>
+            <h3>
+              {decimalFormat(
+                generalData?.data?.recovered?.value,
+                currentLanguage
+              )}
+            </h3>
             <small>{t('recovered')}</small>
           </div>
           <div>
-            <h3>{generalData?.data?.deaths?.value || ''}</h3>
+            <h3>
+              {decimalFormat(generalData?.data?.deaths?.value, currentLanguage)}
+            </h3>
             <small>{t('deaths')}</small>
           </div>
         </Numbers>

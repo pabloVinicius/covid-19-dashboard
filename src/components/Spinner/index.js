@@ -8,8 +8,8 @@ const index = () => {
       <Container>
         {Array(12)
           .fill()
-          .map(() => (
-            <div />
+          .map((_, id) => (
+            <div key={id} />
           ))}
       </Container>
     </Wrapper>
